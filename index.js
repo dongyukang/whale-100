@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/scrape', async (req, res) => {
+app.get('/api/scrape', async (req, res) => {
     try {
         res.json(Object.entries(balancesStore).map(([address, balance]) => ({ address, balance })));
     } catch (error) {
@@ -53,7 +53,7 @@ app.get('/scrape', async (req, res) => {
     }
 });
 
-app.get('/check-balances', async (req, res) => {
+app.get('/api/check-balances', async (req, res) => {
     try {
         const { data } = await axios.get('https://bitinfocharts.com/top-100-richest-bitcoin-addresses.html');
         const $ = cheerio.load(data);
@@ -80,6 +80,5 @@ app.get('/check-balances', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// Export the app for Vercel
+module.exports = app;

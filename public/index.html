@@ -29,7 +29,7 @@
     <script>
         const fetchBalances = async () => {
             try {
-                const response = await fetch('/scrape');
+                const response = await fetch('/api/scrape');
                 const data = await response.json();
                 console.log('Fetched balances:', data); // Debugging line to check the structure
                 const balancesList = document.getElementById('balances');
