@@ -38,11 +38,11 @@ const scrapeData = async () => {
 scrapeData();
 
 // Set interval to scrape data every 5 minutes (300000 milliseconds)
-setInterval(scrapeData, 30000);
+// setInterval(scrapeData, 30000);
 
 // Route to serve the index.html file
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/scrape', async (req, res) => {
