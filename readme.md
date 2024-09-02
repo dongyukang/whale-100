@@ -3,6 +3,8 @@
 ## Overview
 A web app that tracks the top 100 richest Bitcoin addresses, scraping data in real-time.
 
+You can checkout live [here](https://whale-100.vercel.app/).
+
 ## Features
 - Displays a table of the top 100 Bitcoin addresses and their balances.
 - Real-time data fetching via web scraping.
