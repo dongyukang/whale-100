@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Balances</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Top 100 Richest Bitcoin Addresses</h1>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>No</th> <!-- Added No column -->
+                    <th>Address</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody id="balances"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function displayChanges(changes) {
+            const changesList = document.getElementById('changes');
+            changesList.innerHTML = ''; // Clear existing changes
+
+            changes.forEach(change => {
+                const badge = document.createElement('span');
+                badge.className = 'badge';
+                badge.classList.add(change.change > 0 ? 'badge-success' : 'badge-danger');
+                const formattedChange = change.change.toLocaleString(); // Format number with commas
+                badge.textContent = `${change.address}: ${formattedChange} BTC`;
+                changesList.appendChild(badge);
+            });
+        }
+
+        fetch('/check-balances')
+            .then(response => response.json())
+            .then(data => displayChanges(data))
+            .catch(error => console.error('Error fetching balance changes:', error));
+    </script>
+
+    <div id="changes"></div>
+
+    <script>
+        fetch('/scrape')
+            .then(response => response.json())
+            .then(data => {
+                const balancesList = document.getElementById('balances');
+                balancesList.innerHTML = ''; // Clear existing items
+                data.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const formattedBalance = item.balance.toLocaleString(); // Format balance with commas
+                    row.innerHTML = `<td>${index + 1}</td><td>${item.address}</td><td>${formattedBalance} BTC</td>`; // Add formatted balance
+                    balancesList.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching balances:', error));
+    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

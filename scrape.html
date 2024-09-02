@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrape HTML Structure</title>
+</head>
+<body>
+    <h1>Scrape HTML Structure</h1>
+    <pre id="html-structure"></pre>
+
+    <script>
+        fetch('/scrape')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('html-structure').textContent = data;
+            })
+            .catch(error => console.error('Error fetching HTML structure:', error));
+    </script>
+</body>
+</html>
