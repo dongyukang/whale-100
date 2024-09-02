@@ -36,28 +36,6 @@ app.get('/scrape', async (req, res) => {
     }
 });
 
-app.get('/scrape-page', async (req, res) => {
-    try {
-        const { data } = await axios.get('https://bitinfocharts.com/top-100-richest-bitcoin-addresses.html');
-        const $ = cheerio.load(data);
-        const results = [];
-
-        $('table tbody tr').each((index, element) => {
-            const address = $(element).find('td a').text().trim(); // Extract address
-            const balance = $(element).find('td.hidden-phone').text().trim(); // Extract balance
-
-            if (address && balance) {
-                results.push({ address: address, balance: balance });
-            }
-        });
-
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(results, null, 2)); // Indent with 2 spaces
-    } catch (error) {
-        res.status(500).send('Error occurred while scraping');
-    }
-});
-
 app.get('/check-balances', async (req, res) => {
     try {
         const { data } = await axios.get('https://bitinfocharts.com/top-100-richest-bitcoin-addresses.html');
